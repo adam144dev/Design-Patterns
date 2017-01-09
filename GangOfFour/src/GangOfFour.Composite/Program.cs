@@ -55,10 +55,23 @@ namespace adam144.GangOfFour.Composite
     /// </summary>
     class CompositeElement : GraphicComposite
     {
+        private string Name { get; }
+
         // Constructor
         public CompositeElement(string name)
-            : base(name)
         {
+            Name = name;
+        }        // Constructor
+
+        public override void Draw(int indent)
+        {
+            Console.WriteLine(new string('C', indent) + " " + Name);
+
+            // Display each child element on this node
+            foreach (var d in Elements)
+            {
+                d.Draw(indent + 1);
+            }
         }
     }
     class CompositeElement2 : CompositeElement
@@ -82,11 +95,16 @@ namespace adam144.GangOfFour.Composite
     /// </summary>
     class PrimitiveElement : GraphicComponent
     {
+        private string Name { get; }
+
         // Constructor
         public PrimitiveElement(string name)
-            : base(name)
         {
+            Name = name;
         }
+
+        public override void Draw(int indent)
+            => Console.WriteLine(new string('P', indent) + " " + Name);
     }
 
     class PrimitiveElement2 : PrimitiveElement

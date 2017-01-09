@@ -8,22 +8,25 @@ namespace adam144.GangOfFour.Composite
 
     public interface IGraphicComponent
     {
+        /// <summary>
+        /// As IGraphicComposite if Composite
+        /// </summary>
+
         IGraphicComposite GetComposite();
+
+
+        /// <summary>
+        /// Methods
+        /// </summary>
+         
         void Draw(int indent);
     }
+
 
     public abstract class GraphicComponent : IGraphicComponent
     {
         public virtual IGraphicComposite GetComposite() => null;
 
-        protected string Name { get; }
-
-        protected GraphicComponent(string name)
-        {
-            Name = name;
-        }
-
-        public virtual void Draw(int indent)
-            => Console.WriteLine(new string('P', indent) + " " + Name);
+        public abstract void Draw(int indent);
     }
 }

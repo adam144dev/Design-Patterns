@@ -15,40 +15,24 @@ namespace adam144.GangOfFour.Composite
 
     public abstract class GraphicComposite : GraphicComponent, IGraphicComposite
     {
-        private readonly List<IGraphicComponent> elements = new List<IGraphicComponent>();
+        protected List<IGraphicComponent> Elements { get; } = new List<IGraphicComponent>();
 
-        protected GraphicComposite(string name)
-            : base(name)
-        {
-        }
+        /// <summary>
+        /// IGraphicComposite
+        /// </summary>
+
+        public virtual void Add(IGraphicComponent d)
+            => Elements.Add(d);
+
+        public virtual void Remove(IGraphicComponent d)
+            => Elements.Remove(d);
 
 
         /// <summary>
         /// IGraphicComponent
         /// </summary>
 
-        public virtual void Add(IGraphicComponent d)
-            => elements.Add(d);
+        public override IGraphicComposite GetComposite() => (IGraphicComposite) this;
 
-        public virtual void Remove(IGraphicComponent d)
-            => elements.Remove(d);
-
-
-        /// <summary>
-        /// IGraphicComposite
-        /// </summary>
-
-        public override IGraphicComposite GetComposite() => (IGraphicComposite)this;
-
-        public override void Draw(int indent)
-        {
-            Console.WriteLine(new string('C', indent) + " " + Name);
-
-            // Display each child element on this node
-            foreach (var d in elements)
-            {
-                d.Draw(indent + 1);
-            }
-        }
     }
 }
