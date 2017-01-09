@@ -8,8 +8,8 @@ namespace adam144.GangOfFour.Composite
 
     public interface IGraphicComposite : IGraphicComponent
     {
-        void Add(IGraphicComponent d);
-        void Remove(IGraphicComponent d);
+        void Add(IGraphicComponent component);
+        void Remove(IGraphicComponent component);
     }
 
     public abstract class GraphicComposite : GraphicComponent, IGraphicComposite
@@ -20,11 +20,17 @@ namespace adam144.GangOfFour.Composite
         /// IGraphicComposite
         /// </summary>
 
-        public virtual void Add(IGraphicComponent d)
-            => Elements.Add(d);
+        public virtual void Add(IGraphicComponent component)
+        {
+            component.Parent = this;
+            Elements.Add(component);
+        }
 
-        public virtual void Remove(IGraphicComponent d)
-            => Elements.Remove(d);
+        public virtual void Remove(IGraphicComponent component)
+        {
+            Elements.Remove(component);
+            component.Parent = null;
+        }
 
 
         /// <summary>

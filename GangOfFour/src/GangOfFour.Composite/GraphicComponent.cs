@@ -6,6 +6,8 @@
 
     public interface IGraphicComponent
     {
+        IGraphicComponent Parent { get; set; }
+
         /// <summary>
         /// As IGraphicComposite if Composite
         /// </summary>
@@ -23,6 +25,8 @@
 
     public abstract class GraphicComponent : IGraphicComponent
     {
+        public IGraphicComponent Parent { get; set; } = null;
+
         public virtual IGraphicComposite GetComposite() => null;
 
         public abstract void Draw(int indent);
