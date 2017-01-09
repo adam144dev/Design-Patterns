@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace adam144.GangOfFour.Composite
+﻿namespace adam144.GangOfFour.Composite
 {
     /// <summary>
     /// The 'Component' interface & base class
