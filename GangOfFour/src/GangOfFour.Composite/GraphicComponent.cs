@@ -9,7 +9,7 @@ namespace adam144.GangOfFour.Composite
     public interface IGraphicComponent
     {
         IGraphicComposite GetComposite();
-        void Display(int indent);
+        void Draw(int indent);
     }
 
     public abstract class GraphicComponent : IGraphicComponent
@@ -23,7 +23,7 @@ namespace adam144.GangOfFour.Composite
             Name = name;
         }
 
-        public virtual void Display(int indent)
-            => Console.WriteLine(new string('-', indent) + " " + Name);
+        public virtual void Draw(int indent)
+            => Console.WriteLine(new string('P', indent) + " " + Name);
     }
 }

@@ -7,7 +7,7 @@ namespace adam144.GangOfFour.Composite
     /// The 'Composite' interface & base class
     /// </summary>
 
-    public interface IGraphicComposite
+    public interface IGraphicComposite : IGraphicComponent
     {
         void Add(IGraphicComponent d);
         void Remove(IGraphicComponent d);
@@ -24,7 +24,7 @@ namespace adam144.GangOfFour.Composite
 
 
         /// <summary>
-        /// IDrawingElementComponent
+        /// IGraphicComponent
         /// </summary>
 
         public virtual void Add(IGraphicComponent d)
@@ -35,19 +35,19 @@ namespace adam144.GangOfFour.Composite
 
 
         /// <summary>
-        /// IDrawingElementComposite
+        /// IGraphicComposite
         /// </summary>
 
         public override IGraphicComposite GetComposite() => (IGraphicComposite)this;
 
-        public override void Display(int indent)
+        public override void Draw(int indent)
         {
-            Console.WriteLine(new string('-', indent) + "+ " + Name);
+            Console.WriteLine(new string('C', indent) + " " + Name);
 
             // Display each child element on this node
             foreach (var d in elements)
             {
-                d.Display(indent + 2);
+                d.Draw(indent + 1);
             }
         }
     }
