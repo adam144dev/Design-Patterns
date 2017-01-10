@@ -1,33 +1,24 @@
 ﻿namespace adam144.GangOfFour.Composite
 {
     /// <summary>
-    /// The 'Component' interface & base class
+    /// The 'Component' base class
     /// </summary>
 
-    public interface IGraphicComponent
+  public abstract class GraphicComponent
     {
-        IGraphicComponent Parent { get; set; }
+        protected GraphicComponent Parent { get; private set; } = null;
+
+        protected static void SetParent(GraphicComponent child, GraphicComponent parent)
+            => child.Parent = parent;
+
+
+        // As GraphicComposite if Composite
+        public virtual GraphicComposite GetComposite() => null;
+
 
         /// <summary>
-        /// As IGraphicComposite if Composite
+        /// Methods:
         /// </summary>
-
-        IGraphicComposite GetComposite();
-
-
-        /// <summary>
-        /// Methods
-        /// </summary>
-         
-        void Draw(int indent);
-    }
-
-
-    public abstract class GraphicComponent : IGraphicComponent
-    {
-        public IGraphicComponent Parent { get; set; } = null;
-
-        public virtual IGraphicComposite GetComposite() => null;
 
         public abstract void Draw(int indent);
     }

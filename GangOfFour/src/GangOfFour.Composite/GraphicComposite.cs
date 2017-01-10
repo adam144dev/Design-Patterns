@@ -3,41 +3,27 @@
 namespace adam144.GangOfFour.Composite
 {
     /// <summary>
-    /// The 'Composite' interface & base class
+    /// The 'Composite' base class
     /// </summary>
 
-    public interface IGraphicComposite : IGraphicComponent
+    public abstract class GraphicComposite : GraphicComponent
     {
-        void Add(IGraphicComponent component);
-        void Remove(IGraphicComponent component);
-    }
+        protected List<GraphicComponent> Elements { get; } = new List<GraphicComponent>();
 
-    public abstract class GraphicComposite : GraphicComponent, IGraphicComposite
-    {
-        protected List<IGraphicComponent> Elements { get; } = new List<IGraphicComponent>();
 
-        /// <summary>
-        /// IGraphicComposite
-        /// </summary>
+        public override GraphicComposite GetComposite() => (GraphicComposite)this;
 
-        public virtual void Add(IGraphicComponent component)
+
+        public virtual void Add(GraphicComponent child)
         {
-            component.Parent = this;
-            Elements.Add(component);
+            SetParent(child, this);
+            Elements.Add(child);
         }
 
-        public virtual void Remove(IGraphicComponent component)
+        public virtual void Remove(GraphicComponent child)
         {
-            Elements.Remove(component);
-            component.Parent = null;
+            Elements.Remove(child);
+            SetParent(child, null);
         }
-
-
-        /// <summary>
-        /// IGraphicComponent
-        /// </summary>
-
-        public override IGraphicComposite GetComposite() => (IGraphicComposite) this;
-
     }
 }

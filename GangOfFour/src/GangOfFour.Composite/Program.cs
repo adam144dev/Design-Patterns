@@ -40,11 +40,11 @@ namespace adam144.GangOfFour.Composite
             Console.ReadKey();
         }
 
-        private static void ForCompositeOnly(IGraphicComponent igc)
+        private static void ForCompositeOnly(GraphicComponent igc)
         {
-            var i = igc as IGraphicComposite;   // ok for all
-            var i2 = igc.GetComposite();        // ok for all
-            var i3 = (IGraphicComposite)igc;    // ok for GraphicComposite, otherwise throws exception
+            var i = igc as GraphicComposite;   // ok for all
+            var i2 = igc.GetComposite();       // ok for all
+            var i3 = (GraphicComposite)igc;    // ok for GraphicComposite, otherwise throws exception
         }
     }
 
