@@ -12,7 +12,7 @@ namespace adam144.GangOfFour.Composite
 
 
         /// <summary>
-        /// IGraphicComposite
+        /// Utility class to implement IGraphicComposite
         /// </summary>
         protected sealed class Composite : IGraphicComposite
         {

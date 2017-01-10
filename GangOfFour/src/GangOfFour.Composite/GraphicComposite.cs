@@ -5,7 +5,8 @@ namespace adam144.GangOfFour.Composite
     /// <summary>
     /// The 'Composite' base class 
     /// but still can implement IGraphicComposite without these base
-    /// ie. using GraphicComponent.Composite and GraphicComposite as an example
+    /// ie. using GraphicComponent.Composite utility class 
+    /// and implementation of GraphicComposite as an example
     /// </summary>
     public abstract class GraphicComposite : GraphicComponent, IGraphicComposite
     {
