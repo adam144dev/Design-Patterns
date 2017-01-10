@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace adam144.GangOfFour.Composite
 {
@@ -12,18 +13,23 @@ namespace adam144.GangOfFour.Composite
             //ForCompositeOnly(p);
 
             // Create a tree structure 
-            GraphicComponent CE1 = new CompositeElement("Picture");
-            var root = CE1.GetComposite();
+            var root = new CompositeElement("Picture");
             root.Add(new PrimitiveElement("Red Line"));
             root.Add(new PrimitiveElement("Blue Circle"));
             root.Add(new PrimitiveElement("Green Box"));
 
             // Create a branch
-            GraphicComponent CE2 = new CompositeElement2("Two Circles");
-            var comp = CE2.GetComposite();
+            var comp = new CompositeElement2("Two Circles");
             comp.Add(new PrimitiveElement2("Black Circle"));
             comp.Add(new PrimitiveElement2("White Circle"));
             root.Add(comp);
+
+            var compOnPrimitive = new CompositeOnPrimitiveElement("CompositeOnPrimitiveElement");
+            compOnPrimitive.Add(new PrimitiveElement("PrimitiveElement1"));
+            var compOnPrimitiveComposite = new CompositeElement("CompositeElement");
+            compOnPrimitive.Add(compOnPrimitiveComposite);
+            root.Add(compOnPrimitive);
+            compOnPrimitiveComposite.Add(new PrimitiveElement("PrimitiveElement-compOnPrimitiveComposite"));
 
             // Add and remove a PrimitiveElement
             PrimitiveElement pe = new PrimitiveElement("Yellow Line");
@@ -42,16 +48,14 @@ namespace adam144.GangOfFour.Composite
 
         private static void ForCompositeOnly(GraphicComponent igc)
         {
-            var i = igc as GraphicComposite;   // ok for all
-            var i2 = igc.GetComposite();       // ok for all
-            var i3 = (GraphicComposite)igc;    // ok for GraphicComposite, otherwise throws exception
+            var i2 = igc as IGraphicComposite;  // ok for all
+            var i3 = (IGraphicComposite)igc;    // ok for GraphicComposite, otherwise throws exception
         }
     }
 
-  
 
     /// <summary>
-    /// The 'Composite' class
+    /// The 'Composite' class based on GraphicComposite
     /// </summary>
     class CompositeElement : GraphicComposite
     {
@@ -68,9 +72,9 @@ namespace adam144.GangOfFour.Composite
             Console.WriteLine(new string('C', indent) + " " + Name);
 
             // Display each child element on this node
-            foreach (var d in Elements)
+            foreach (var child in GetChilds())
             {
-                d.Draw(indent + 1);
+                child.Draw(indent + 1);
             }
         }
     }
@@ -84,7 +88,7 @@ namespace adam144.GangOfFour.Composite
 
         public override void Draw(int indent)
         {
-            Console.Write(nameof(CompositeElement2) + " ");
+            Console.Write($"{nameof(CompositeElement2)}: ");
             base.Draw(indent);
         }
     }
@@ -117,9 +121,49 @@ namespace adam144.GangOfFour.Composite
 
         public override void Draw(int indent)
         {
-            Console.Write(nameof(PrimitiveElement2) + " ");
+            Console.Write($"{nameof(PrimitiveElement2)}: ");
             base.Draw(indent);
         }
     }
 
+    /// <summary>
+    /// The 'Composite' class based on Component derived class
+    /// </summary>
+    class CompositeOnPrimitiveElement : PrimitiveElement2, IGraphicComposite
+    {
+        private readonly GraphicComponent.Composite _composite;
+
+        public CompositeOnPrimitiveElement(string name)
+            : base(name)
+        {
+            _composite = new GraphicComponent.Composite(this);
+        }
+
+        /// <summary>
+        /// IGraphicComposite
+        /// </summary>
+
+        public virtual void Add(GraphicComponent child)
+            => _composite.Add(child);
+
+        public virtual void Remove(GraphicComponent child)
+            => _composite.Remove(child);
+
+        public virtual IEnumerable<GraphicComponent> GetChilds()
+            => _composite.GetChilds();
+
+        /// <summary>
+        /// Methods:
+        /// </summary>
+
+        public override void Draw(int indent)
+        {
+            // Display each child element on this node
+            foreach (var child in GetChilds())
+            {
+                Console.Write($"{nameof(CompositeOnPrimitiveElement)} on {nameof(PrimitiveElement2)}: ");
+                child.Draw(indent + 1);
+            }
+        }
+    }
 }
